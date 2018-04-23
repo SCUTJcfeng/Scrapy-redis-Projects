@@ -267,7 +267,9 @@ redis-cli.exe -p 6379
 ### 6. 改进
 
 问题一：```slave```不运作，只有```master```运作。
+
 原因：requests队列只有一个，master有优先权
+
 措施：模拟添加多个`jandan:start_urls`队列
 
 ```
@@ -277,12 +279,14 @@ r = redis.Redis()
 for i in range(3, 100):
     r.rpush('jandan:start_urls', 'http://jandan.net/page/%d' % i)
 ```
-![这里写图片描述](https://img-blog.csdn.net/20180423193103140?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NDVVRKY2Zlbmc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+![这里写图片描述](https://github.com/SCUTJcfeng/Scrapy-redis-Projects/blob/master/jandan_redis%20-%20slave/redis_start_urls.PNG)
 
 再次运行`master`和`slave`：
-![这里写图片描述](https://img-blog.csdn.net/20180423193254986?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NDVVRKY2Zlbmc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+![这里写图片描述](https://github.com/SCUTJcfeng/Scrapy-redis-Projects/blob/master/jandan_redis%20-%20slave/master_slave.PNG)
 呐，跑起来了。
 
 问题二：没有实现`master`处理`items`，`slave`处理`requests`
+
 原因：第一个项目嘛...
+
 措施：Scrapy-redis学习系列之`二`
